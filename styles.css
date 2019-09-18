@@ -1,0 +1,15 @@
+#boardContainer {
+    height: 300px;
+    width: 300px;
+    background-color: aqua;
+}
+
+.turnBox {
+    height: 98px;
+    width: 98px;
+    background-color: aqua;
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
