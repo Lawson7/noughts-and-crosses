@@ -1,24 +1,30 @@
+//gameboard module
 const gameBoard = (() => {
 
-    let turnDisplay = ['X','O','X','O','O','X','X','O','X']
+    let boardScore = ['X','0','X','X','X','0','0','0','X']
+    
 
-    return {turnDisplay}
-
+    return {boardScore}
 })();
 
-
+//player factory function
 const playerFactory = ((name) => {
 
     return {name};
 });
 
-const render = () => {
-    const boardContainer = document.getElementById('boardContainer');
-    for (i = 0; i < 9; i++){
-        const turnBox = document.createElement('div');
-        turnBox.classList.add('turnBox');
-        boardContainer.appendChild(turnBox);
-    }
-}
+//gameplay module
+const game = (() => {
 
-render()
+const turnBox = document.querySelectorAll('.turnBox');
+
+const updateBoard = function () {
+    turnBox.forEach((box) => {
+        box.textContent = gameBoard.boardScore[box.dataset.index];
+    });
+}
+    
+    return {updateBoard}
+})();
+
+game.updateBoard();
