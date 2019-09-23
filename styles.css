@@ -1,15 +1,26 @@
+#mainContainer {
+
+}
+
+
 #boardContainer {
+    margin: 0 auto;
     height: 300px;
     width: 300px;
     background-color: aqua;
 }
 
 .turnBox {
-    height: 95px;
-    width: 95px;
+    height: 98px;
+    width: 98px;
     background-color: aqua;
-    display: inline-block;
+    float:left;
     border-width: 1px;
     border-style: solid;
     border-color: black;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: 82px;
+    font-family: monospace;
 }
