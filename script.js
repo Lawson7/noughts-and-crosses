@@ -29,6 +29,13 @@ const gameBoard = (() => {
         });
     };
 
+    const outcomeText = document.querySelector('.outcomeText')
+
+    const showOutcome = function (outcome) {
+        outcomeText.textContent = outcome;
+    }
+
+
     const resetBox = document.querySelector('.resetBox')
 
     const showReset = function () {
@@ -38,7 +45,7 @@ const gameBoard = (() => {
         });
     }
 
-    return {boardScore, updateBoard, boxSensor, showReset}
+    return {boardScore, updateBoard, boxSensor, showOutcome, showReset}
 })();
 
 
@@ -53,9 +60,8 @@ const playerFactory = ((name, symbol, roundCount) => {
 const game = (() => {
     gameBoard.updateBoard();
 
-    const playerOne = playerFactory('Human','X', 0);
-    const playerTwo = playerFactory('PC', '0', 0);
-
+    const playerOne = playerFactory("X's",'X', 0);
+    const playerTwo = playerFactory("0's", '0', 0);   
     gameBoard.boxSensor();
 
     const detectWin = function (){
@@ -69,7 +75,7 @@ const game = (() => {
             gameBoard.boardScore[0] == 'X' && gameBoard.boardScore[4] == 'X' && gameBoard.boardScore[8] == 'X' ||
             gameBoard.boardScore[2] == 'X' && gameBoard.boardScore[4] == 'X' && gameBoard.boardScore[6] == 'X'
             ){
-            console.log('PlayerOne wins!')
+            gameBoard.showOutcome(playerOne.name + ' wins!')
             gameBoard.showReset()
 
         } 
@@ -83,7 +89,7 @@ const game = (() => {
         gameBoard.boardScore[0] == '0' && gameBoard.boardScore[4] == '0' && gameBoard.boardScore[8] == '0' ||
         gameBoard.boardScore[2] == '0' && gameBoard.boardScore[4] == '0' && gameBoard.boardScore[6] == '0'
         ){
-            console.log('PlayerTwo wins!')
+            gameBoard.showOutcome(playerTwo.name + ' wins!')
             gameBoard.showReset();
 
 
@@ -99,7 +105,7 @@ const game = (() => {
                 gameBoard.boardScore[7] !== "" &&
                 gameBoard.boardScore[8] !== ""
                 ){
-                    console.log('its a tie!')
+                    gameBoard.showOutcome('Its a tie')
                     gameBoard.showReset()
                 }
     }
