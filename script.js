@@ -1,7 +1,7 @@
 //gameboard module
 const gameBoard = (() => {
 
-    let boardScore = ['','','','','','','','','']
+    const boardScore = ['','','','','','','','','']
 
     const turnBox = document.querySelectorAll('.turnBox');
 
@@ -22,19 +22,23 @@ const gameBoard = (() => {
                         game.playerTwo.roundCount = game.playerTwo.roundCount + 1;
                         gameBoard.boardScore[box.dataset.index] = game.playerTwo.symbol
                     }
-                } else {alert('spot taken')}
-                
-                gameBoard.updateBoard();
+                } else {console.log('Try another spot!')}
+            updateBoard()
+            game.detectWin();
             });
         });
     };
 
+    const resetBox = document.querySelector('.resetBox')
 
-    const detectWin = function (){
-
+    const showReset = function () {
+        resetBox.classList.add("showReset")
+        resetBox.addEventListener("click", function () {
+            location.reload()
+        });
     }
 
-    return {boardScore, updateBoard, boxSensor, detectWin}
+    return {boardScore, updateBoard, boxSensor, showReset}
 })();
 
 
@@ -50,13 +54,56 @@ const game = (() => {
     gameBoard.updateBoard();
 
     const playerOne = playerFactory('Human','X', 0);
-    const playerTwo = playerFactory('PC', 'O', 0);
+    const playerTwo = playerFactory('PC', '0', 0);
 
     gameBoard.boxSensor();
 
+    const detectWin = function (){
 
-    gameBoard.detectWin();
+        if (gameBoard.boardScore[0] == 'X' && gameBoard.boardScore[3] == 'X' && gameBoard.boardScore[6] == 'X' ||
+            gameBoard.boardScore[1] == 'X' && gameBoard.boardScore[4] == 'X' && gameBoard.boardScore[7] == 'X' ||
+            gameBoard.boardScore[2] == 'X' && gameBoard.boardScore[5] == 'X' && gameBoard.boardScore[8] == 'X' ||
+            gameBoard.boardScore[0] == 'X' && gameBoard.boardScore[1] == 'X' && gameBoard.boardScore[2] == 'X' ||
+            gameBoard.boardScore[3] == 'X' && gameBoard.boardScore[4] == 'X' && gameBoard.boardScore[5] == 'X' ||
+            gameBoard.boardScore[6] == 'X' && gameBoard.boardScore[7] == 'X' && gameBoard.boardScore[8] == 'X' ||
+            gameBoard.boardScore[0] == 'X' && gameBoard.boardScore[4] == 'X' && gameBoard.boardScore[8] == 'X' ||
+            gameBoard.boardScore[2] == 'X' && gameBoard.boardScore[4] == 'X' && gameBoard.boardScore[6] == 'X'
+            ){
+            console.log('PlayerOne wins!')
+            gameBoard.showReset()
 
-return {playerOne, playerTwo}
+        } 
+
+        else if(gameBoard.boardScore[0] == '0' && gameBoard.boardScore[3] == '0' && gameBoard.boardScore[6] == '0' ||
+        gameBoard.boardScore[1] == '0' && gameBoard.boardScore[4] == '0' && gameBoard.boardScore[7] == '0' ||
+        gameBoard.boardScore[2] == '0' && gameBoard.boardScore[5] == '0' && gameBoard.boardScore[8] == '0' ||
+        gameBoard.boardScore[0] == '0' && gameBoard.boardScore[1] == '0' && gameBoard.boardScore[2] == '0' ||
+        gameBoard.boardScore[3] == '0' && gameBoard.boardScore[4] == '0' && gameBoard.boardScore[5] == '0' ||
+        gameBoard.boardScore[6] == '0' && gameBoard.boardScore[7] == '0' && gameBoard.boardScore[8] == '0' ||
+        gameBoard.boardScore[0] == '0' && gameBoard.boardScore[4] == '0' && gameBoard.boardScore[8] == '0' ||
+        gameBoard.boardScore[2] == '0' && gameBoard.boardScore[4] == '0' && gameBoard.boardScore[6] == '0'
+        ){
+            console.log('PlayerTwo wins!')
+            gameBoard.showReset();
+
+
+        }
+
+        else if(gameBoard.boardScore[0] !== "" &&
+                gameBoard.boardScore[1] !== "" &&
+                gameBoard.boardScore[2] !== "" &&
+                gameBoard.boardScore[3] !== "" &&
+                gameBoard.boardScore[4] !== "" &&
+                gameBoard.boardScore[5] !== "" &&
+                gameBoard.boardScore[6] !== "" &&
+                gameBoard.boardScore[7] !== "" &&
+                gameBoard.boardScore[8] !== ""
+                ){
+                    console.log('its a tie!')
+                    gameBoard.showReset()
+                }
+    }
+
+return {playerOne, playerTwo, detectWin}
 
 })();
